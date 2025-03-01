@@ -20,11 +20,15 @@ const Form = () => {
 
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='h-3/4 w-1/2 flex flex-col gap-4 bg-black border border-white' >
+    <form onSubmit={handleSubmit(onSubmit)} className='h-1/2 min-h-fit max-h-96 w-1/2  p-3 flex flex-col items-center justify-center gap-4 bg-black border border-white rounded-lg' >
       <input
         {...register("user",
           {
             required: true,
+            minLength: {
+              value: 3,
+              message: "Min length is 3"
+            },
             maxLength: {
               value: 15,
               message: "Max length is 15"
@@ -34,9 +38,11 @@ const Form = () => {
               message: "Only letters are allowed"
             }
           })} 
-          className='w-2/3 p-2 '
+          className='w-2/3 p-2 rounded-xl border border-white'
+
+          placeholder="User"
           />
-      {errors.user && <span>{errors.user.message}</span>}
+      {errors.user && <span className=" text-red-600"   >{errors.user.message}</span>}
 
       <input {...register("date",
         {
@@ -47,9 +53,10 @@ const Form = () => {
           }
         })
       } 
-      className='w-2/3 p-2 '
+      className='w-2/3 p-2 rounded-xl border border-white'
+      placeholder="Date"
       />
-      {errors.date && <span>{errors.date.message}</span>}
+      {errors.date && <span className=" text-red-600">{errors.date.message}</span>}
 
       <input {...register("resume", { 
           required: "complete this field",
@@ -59,12 +66,18 @@ const Form = () => {
           } 
 
       })}
-      className='w-2/3 p-2 '
+      className='w-2/3 p-2 rounded-xl border border-white'
+      placeholder="Resume"
       />
 
-      {errors.resume && <span>{errors.resume.message}</span>}
+      {errors.resume && <span className=" text-red-600">{errors.resume.message}</span>}
 
-      <button type="submit" className='w-5 h-3 bg-green-300 hover:bg-green-900' />
+      <div className="flex justify-end w-2/3">
+        <button type="submit" className='w-20   hover:bg-white hover:text-black border rounded-md' >
+        Submit
+      </button> 
+      </div>
+      
     </form>
   )
 }
