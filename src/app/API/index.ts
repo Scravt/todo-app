@@ -1,93 +1,36 @@
-export const arrayTasks = [
-      {
-        task: {
-          user  
-          : 'user1',
-          date: '2021-10-10',
-          resume: 'resume1',
-          id: '1'
-        }
-      },
-      {
-        task: {
-          user
-          : 'user2',
-          date: '2021-10-11',
-          resume: 'resume2',
-          id: '2'
-        }
-      },
-      {
-        task: {
-          user  
-          : 'user1',
-          date: '2021-10-10',
-          resume: 'resume1',
-          id: '3'
-        }
-      },
-      {
-        task: {
-          user
-          : 'user2',
-          date: '2021-10-11',
-          resume: 'resume2',
-          id: '4'
-        }
-      },
-      {
-        task: {
-          user  
-          : 'user1',
-          date: '2021-10-10',
-          resume: 'resume1',
-          id: '5'
-        }
-      },
-      {
-        task: {
-          user
-          : 'user2',
-          date: '2021-10-11',
-          resume: 'resume2',
-          id: '6'
-        }
-      },
-      {
-        task: {
-          user  
-          : 'user1',
-          date: '2021-10-10',
-          resume: 'resume1',
-          id: '7'
-        }
-      },
-      {
-        task: {
-          user
-          : 'user2',
-          date: '2021-10-11',
-          resume: 'resume2',
-          id: '8'
-        }
-      },
-      {
-        task: {
-          user  
-          : 'user1',
-          date: '2021-10-10',
-          resume: 'resume1',
-          id: '9'
-        }
-      },
-      {
-        task: {
-          user
-          : 'user2',
-          date: '2021-10-11',
-          resume: 'resume2',
-          id: '10'
-        }
-      }
-      
-     ]
+import { db } from "./firebase"
+import { addDoc, collection,getDocs } from "firebase/firestore";
+import { IFormInput, ArrayTasksProps, Task } from '@/app/types/types';
+
+
+export const  addTask = async (taks:IFormInput) => {
+  try {
+    const docRef = await addDoc(collection(db, "tasks"), taks);
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
+
+export const getTasks = async (): Promise<ArrayTasksProps> => {
+  try {
+    const tasksCollectionRef = collection(db, "tasks");
+    const querySnapshot = await getDocs(tasksCollectionRef);
+    
+    const tasks: Task[] = querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        user: data.user ?? "",
+        date: data.date ?? "",
+        resume: data.resume ?? "",
+      };
+    });
+
+    return { tasks };
+  } catch (e) {
+    console.error("Error fetching tasks:", e);
+    return { tasks: [] }; 
+  }
+};
+

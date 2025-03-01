@@ -1,23 +1,21 @@
-
 'use client';
-
-
 import { useForm, SubmitHandler } from "react-hook-form";
+import { IFormInput } from '@/app/types/types';
+import { addTask } from "@/app/API";
 
 
 
-
-interface IFormInput {
-  user: string;
-  date: string;
-  resume: string;
-}
 
 const Form = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-
-  const onSubmit: SubmitHandler<IFormInput> = data => console.log(data);
-
+  const onSubmit: SubmitHandler<IFormInput> = data =>{
+    const newTask = {
+      user: data.user,
+      date: data.date,
+      resume: data.resume
+    }
+    addTask(newTask);
+  } 
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='h-1/2 min-h-fit max-h-96 w-1/2  p-3 flex flex-col items-center justify-center gap-4 bg-black border border-white rounded-lg' >
@@ -37,11 +35,11 @@ const Form = () => {
               value: /^[A-Za-z]+$/i,
               message: "Only letters are allowed"
             }
-          })} 
-          className='w-2/3 p-2 rounded-xl border border-white'
+          })}
+        className='w-2/3 p-2 rounded-xl border border-white'
 
-          placeholder="User"
-          />
+        placeholder="User"
+      />
       {errors.user && <span className=" text-red-600"   >{errors.user.message}</span>}
 
       <input {...register("date",
@@ -52,32 +50,31 @@ const Form = () => {
             return value > today || "La fecha debe ser posterior a la actual";
           }
         })
-      } 
-      className='w-2/3 p-2 rounded-xl border border-white'
-      placeholder="Date"
+      }
+        className='w-2/3 p-2 rounded-xl border border-white'
+        placeholder="Date"
       />
       {errors.date && <span className=" text-red-600">{errors.date.message}</span>}
 
-      <input {...register("resume", { 
-          required: "complete this field",
-          pattern: {
-            value: /^[A-Za-z0-9 ]+$/i,
-            message: "Only letters are allowed"
-          } 
-
+      <input {...register("resume", {
+        required: "complete this field",
+        pattern: {
+          value: /^[A-Za-z0-9 ]+$/i,
+          message: "Only letters are allowed"
+        }
       })}
-      className='w-2/3 p-2 rounded-xl border border-white'
-      placeholder="Resume"
+        className='w-2/3 p-2 rounded-xl border border-white'
+        placeholder="Resume"
       />
 
       {errors.resume && <span className=" text-red-600">{errors.resume.message}</span>}
 
       <div className="flex justify-end w-2/3">
         <button type="submit" className='w-20   hover:bg-white hover:text-black border rounded-md' >
-        Submit
-      </button> 
+          Submit
+        </button>
       </div>
-      
+
     </form>
   )
 }

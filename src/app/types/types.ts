@@ -12,3 +12,9 @@ export interface TasksProps {
 export interface ArrayTasksProps {
     tasks: Task[];
 }
+
+export interface IFormInput {
+    user: string;
+    date: string;
+    resume: string;
+  }
