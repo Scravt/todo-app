@@ -4,11 +4,11 @@ import { TasksProps } from '@/app/types/types'
 
 const Tasks = ({task}:TasksProps) => {
   return (
-    <div>
-        <div>
+    <div className=' p-4 bg-black flex gap-5  border border-white rounded-lg'>
+        <div className='flex grow '>
             {task.resume}
         </div>
-        <select name="borrar" id={task.id}   ></select>
+        <input type='checkbox' name="borrar" id={task.id}   ></input>
         
     </div>
   )
