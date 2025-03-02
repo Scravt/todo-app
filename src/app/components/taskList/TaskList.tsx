@@ -2,7 +2,6 @@
 
 import { Task } from '@/app/types/types'
 import Tasks from '@/app/components/tasks/Tasks'
-
 import { getTasks } from '@/app/API'
 import { useEffect, useState } from 'react'
 
@@ -31,8 +30,9 @@ const TaskList = () => {
 
       <div className='w-5/6  max-h-4/5  p-4 flex flex-col gap-5  overflow-y-auto scroll-smooth '>
         {arrayTasks?.map((task) => (
-          <Tasks key={task.id} task={task} />
+          task.active && <Tasks key={task.id} task={task} />
         ))}
+          
       </div>
     </div>
   )

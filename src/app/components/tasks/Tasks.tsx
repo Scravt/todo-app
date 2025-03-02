@@ -1,5 +1,7 @@
 import React from 'react'
 import { TasksProps } from '@/app/types/types'
+import { updateTask } from '@/app/API'
+//import deleteIcon from '@/../public/delete.png';
 
 
 const Tasks = ({task}:TasksProps) => {
@@ -8,7 +10,10 @@ const Tasks = ({task}:TasksProps) => {
         <div className='flex grow '>
             {task.resume}
         </div>
-        <input type='checkbox' name="borrar" id={task.id}   ></input>
+       <span>
+            <img src='deleteIcon' alt='delete' onClick={() => updateTask(task.id, {active: false})} />
+
+       </span>
         
     </div>
   )

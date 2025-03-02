@@ -3,6 +3,7 @@ export type Task = {
     date: string,
     resume: string
     id: string
+    active: boolean
     }
 
 export interface TasksProps {

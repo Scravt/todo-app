@@ -1,5 +1,5 @@
 import { db } from "./firebase"
-import { addDoc, collection,getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { IFormInput, ArrayTasksProps, Task } from '@/app/types/types';
 
 
@@ -24,6 +24,7 @@ export const getTasks = async (): Promise<ArrayTasksProps> => {
         user: data.user ?? "",
         date: data.date ?? "",
         resume: data.resume ?? "",
+        active: data.active ?? false
       };
     });
 
@@ -34,3 +35,12 @@ export const getTasks = async (): Promise<ArrayTasksProps> => {
   }
 };
 
+export const updateTask = async(docId:string, updates:any) => {
+  try {
+    const docRef = doc(db, "tasks", docId);
+    await updateDoc(docRef, updates);
+    console.log("Document updated with ID: ", docId);
+  } catch (e) {
+    console.error("Error updating document: ", e);
+  }
+}

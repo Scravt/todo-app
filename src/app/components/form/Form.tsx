@@ -4,15 +4,14 @@ import { IFormInput } from '@/app/types/types';
 import { addTask } from "@/app/API";
 
 
-
-
 const Form = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
   const onSubmit: SubmitHandler<IFormInput> = data =>{
     const newTask = {
       user: data.user,
       date: data.date,
-      resume: data.resume
+      resume: data.resume,
+      active: true
     }
     addTask(newTask);
   } 
